@@ -3,7 +3,7 @@
   gather_facts: False
   tasks: 
     - name: Import vpc variables
-      includes_vars: vars/vpc_setup
+        includes_vars: vars/vpc_setup
     - name: Create xprofile vpc
       ec2_vpc_net:
         name: "{{vpc_name}}"
@@ -14,4 +14,3 @@
         tenancy: default
         state: "{{state}}"
       register: vpcout
-      
