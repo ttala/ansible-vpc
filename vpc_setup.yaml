@@ -104,8 +104,7 @@
           subnet_id: "{{pubsub1.subnet.id}}"
           state: "{{state}}"
           region: "{{region}}"
-          resource_tags:
-             Name: xprofile-NAT
+          wait: yes
           if_exist_do_not_create: true
       register: natout
 
