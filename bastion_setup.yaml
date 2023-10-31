@@ -58,4 +58,4 @@
       register: bastion-host_out
     
     - debug:
-        var: bastion-host_out
+        var: bastion_host_out
