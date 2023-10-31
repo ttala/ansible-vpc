@@ -34,7 +34,7 @@
             from_port: 22
             to_port: 22
             cidr_id: "{{MYIP}}"
-        register: bastion_out
+      register: bastion_out
 
     - name: creation bastion host
       ec2:
