@@ -106,7 +106,7 @@
           region: "{{region}}"
           resource_tags:
              Name: xprofile-NAT
-          if_exists_do_not_create: true
+          if_exist_do_not_create: true
       register: natout
 
     - debug:
