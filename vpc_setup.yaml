@@ -20,6 +20,7 @@
 
     - name: create public subnet 1 in zone 1
       ec2_vpc_subnet:
+          name: "PubSub1Cidr"
           vpc_id: "{{vpcout.vpc.id}}"
           state: "{{state}}"
           cidr: "{{PubSub1Cidr}}"
@@ -29,3 +30,6 @@
           resource_tags:
              name: xprofile-pubsub1
       register: pubsub1
+    
+    - debug:
+        var: pubsub1
