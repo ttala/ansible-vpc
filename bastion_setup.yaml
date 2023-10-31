@@ -24,7 +24,7 @@
       when: key_out.changed
 
     - name: Create Sec grp for bastion
-      ec2_group:
+      ec2_security_group:
         name: Bastion-host-sg
         description: Allow port 22 from everywhere and all port within sg
         region: "{{region}}"
