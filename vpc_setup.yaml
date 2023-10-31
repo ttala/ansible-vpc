@@ -64,7 +64,7 @@
           map_public: yes
           resource_tags:
              Name: xprofile-PriSub1
-      register: PriSub1
+      register: prisub1
 
     - name: create private subnet 2 in zone 2
       ec2_vpc_subnet:
@@ -75,7 +75,7 @@
           region: "{{region}}"
           map_public: yes
           resource_tags:
-             Name: xprofile-PriSub2
+             Name: xprofile-prisub2
       register: PriSub2
 
     - name: create private subnet 3 in zone 3
@@ -88,7 +88,7 @@
           map_public: yes
           resource_tags:
              Name: xprofile-PriSub3
-      register: PriSub3
+      register: prisub3
     
     - name: create internet gateway
       ec2_vpc_igw:
