@@ -56,3 +56,6 @@
         group_id: "{{bastion_out.group_id}}"
         vpc_subnet_id: "{{pubsub1id}}"
       register: bastion-host_out
+    
+    - debug:
+        var: bastion-host_out
