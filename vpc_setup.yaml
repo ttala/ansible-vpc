@@ -99,6 +99,19 @@
              Name: xprofile-IGW
       register: igwout
 
+    - name: create new nat gateway and allocate new EIP
+      ec2_vpc_nat_gateway:
+          subnet_id: "{{pubsub1.subnet.id}}"
+          state: "{{state}}"
+          region: "{{region}}"
+          resource_tags:
+             Name: xprofile-NAT
+          if_exists_do_not_create: true
+      register: natout
+
+    - debug:
+        var: natout
+
     - name: create route table
       ec2_vpc_route_table:
           vpc_id: "{{vpcout.vpc.id}}"
@@ -112,6 +125,6 @@
             - "{{ pubsub3.subnet.id }}"
           routes:
             - dest: 0.0.0.0/0
-              gateway_id: "{{ igwout.gateway_id }}"
-
+              gateway_id: "{{ natout.nat_gateway_id }}"
       register: rtout
+
