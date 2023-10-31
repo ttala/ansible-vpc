@@ -76,7 +76,7 @@
           map_public: yes
           resource_tags:
              Name: xprofile-prisub2
-      register: PriSub2
+      register: prisub2
 
     - name: create private subnet 3 in zone 3
       ec2_vpc_subnet:
