@@ -90,3 +90,29 @@
              Name: xprofile-PriSub3
       register: PriSub3
     
+    - name: create internet gateway
+      ec2_vpc_igw:
+          vpc_id: "{{vpcout.vpc.id}}"
+          state: "{{state}}"
+          region: "{{region}}"
+          resource_tags:
+             Name: xprofile-IGW
+      register: igwout
+
+    - name: create route table
+      ec2_vpc_route_table:
+          vpc_id: "{{vpcout.vpc.id}}"
+          state: "{{state}}"
+          region: "{{region}}"
+          resource_tags:
+             Name: xprofile-rt
+          subnets:
+            - "{{ pubsub1.subnet.id }}"
+            - "{{ pubsub2.subnet.id }}"
+            - "{{ pubsub3.subnet.id }}"
+          routes:
+            - dest: 0.0.0.0/0
+              gateway_id: "{{ igwout.gateway_id }}"
+            - dest: ::/0
+              gateway_id: "{{ igwout.gateway_id }}"
+      register: rtout
