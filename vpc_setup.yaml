@@ -108,8 +108,8 @@
           if_exist_do_not_create: true
       register: natout
 
-    #- debug:
-    #    var: natout
+    - debug:
+        var: natout
 
     - name: create route table
       ec2_vpc_route_table:
