@@ -15,8 +15,8 @@
         state: "{{state}}"
       register: vpcout
 
-    - debug:
-        var: vpcout
+    #- debug:
+        #var: vpcout
 
     - name: create public subnet 1 in zone 1
       ec2_vpc_subnet:
@@ -113,6 +113,5 @@
           routes:
             - dest: 0.0.0.0/0
               gateway_id: "{{ igwout.gateway_id }}"
-            - dest: ::/0
-              gateway_id: "{{ igwout.gateway_id }}"
+
       register: rtout
