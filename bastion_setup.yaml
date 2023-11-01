@@ -51,7 +51,7 @@
            Project: XProfile
            Owner: Bakero
         exact_count: 1
-        group_id: bastion_sg_out.group_id
+        group_id: '{{bastion_sg_out.group_id}}'
         vpc_subnet_id: "{{pubsub1id}}"
       register: bastion_host_out
     
