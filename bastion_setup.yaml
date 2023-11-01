@@ -36,26 +36,3 @@
             cidr_id: "{{MYIP}}"
       register: bastion_out
 
-    - name: creation bastion host
-      ec2:
-        key_name: xprofile-key
-        region: "{{region}}"
-        instance_type: t2.micro
-        image: "{{bastion_ami}}"
-        wait: yes
-        wait_timeout: 300
-        instance_tags:
-           Name: "bastion_host"
-           Project: XProfile
-           Owner: Bakero
-        exact_count: 1
-        count_tag:
-           Name: "bastion_host"
-           Project: XProfile
-           Owner: Bakero
-        group_id: "{{bastion_out.group_id}}"
-        vpc_subnet_id: "{{pubsub1id}}"
-      register: bastion_host_out
-    
-    - debug:
-        var: bastion_host_out
