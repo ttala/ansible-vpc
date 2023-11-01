@@ -43,8 +43,7 @@
         region: "{{region}}"
         instance_type: t2.micro
         image: "{{bastion_ami}}"
-        network:
-          assign_public_ip: yes
+        assign_public_ip: yes
         wait: yes
         wait_timeout: 300
         count_tag:
