@@ -23,6 +23,22 @@
         mode: 8600
       when: key_out.changed
 
+    - name: Create Sec grp for bastion
+      ec2_group:
+        name: Bastion-host-sg
+        description: security group for bastion host
+        region: "{{region}}"
+        vpc_id: "{{vpcid}}"
+        rules: 
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_id: 0.0.0.0/0
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_id: "{{MYIP}}"
+
     - name: Create a security group
       ec2_group:
           name: Bastion-host_tests
@@ -37,19 +53,3 @@
               from_port: 22
               to_port: 22
               cidr_ip: "{{MYIP}}"
-
-    - name: Create Sec grp for bastion
-      ec2_group:
-        name: Bastion-host-sg
-        description: Allow port 22 from everywhere and all port within sg
-        region: "{{region}}"
-        vpc_id: "{{vpcid}}"
-        rules: 
-          - proto: tcp
-            from_port: 22
-            to_port: 22
-            cidr_id: 0.0.0.0/0
-          - proto: tcp
-            from_port: 80
-            to_port: 80
-            cidr_id: "{{MYIP}}"
