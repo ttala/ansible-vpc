@@ -41,7 +41,7 @@
 
     - name: Create a security group
       ec2_group:
-          name: Bastion-host_tests
+          name: Bastion-host-tests
           description: Ansible security group
           region: "{{region}}"
           vpc_id: "{{vpcid}}"
