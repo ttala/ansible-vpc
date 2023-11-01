@@ -44,6 +44,7 @@
           name: Bastion-host_tests
           description: Ansible security group
           region: "{{region}}"
+          vpc_id: "{{vpcid}}"
           rules:
             - proto: tcp
               from_port: 80
