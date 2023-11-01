@@ -49,7 +49,7 @@
            Name: "bastion_host"
            Project: XProfile
            Owner: Bakero
-        exact_count: 1
+        #exact_count: 1
         security_groups:
            group_id: "{{bastion_out.group_id}}"
         vpc_subnet_id: "{{pubsub1id}}"
