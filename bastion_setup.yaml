@@ -48,8 +48,8 @@
         instance_type: t2.micro
         image: "{{bastion_ami}}"
         assign_public_ip: yes
-        wait: yes
-        wait_timeout: 300
+        wait: no
+        #wait_timeout: 300
         count_tag:
            Name: "bastion_host"
         exact_count: 1
