@@ -34,11 +34,11 @@
             from_port: 22
             to_port: 22
             cidr_id: "{{MYIP}}"
-      register: bastion_out
+      register: bastion_sg_out
 
     - name: creation bastion host
-      ec2_instance:
-        name: "bastion_host"
+      ec2:
+        name: bastion_host
         key_name: xprofile-key
         region: "{{region}}"
         instance_type: t2.micro
@@ -47,12 +47,12 @@
           assign_public_ip: yes
         wait: yes
         wait_timeout: 300
-        tags:
+        count_tag:
            Name: "bastion_host"
            Project: XProfile
            Owner: Bakero
-        #count: 1
-        security_groups: ["{{bastion_out.group_id}}"]
+        exact_count: 1
+        group_id: bastion_sg_out.group_id
         vpc_subnet_id: "{{pubsub1id}}"
       register: bastion_host_out
     
