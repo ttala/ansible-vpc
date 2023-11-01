@@ -23,6 +23,22 @@
         mode: 8600
       when: key_out.changed
 
+    - name: Create a security group
+      ec2_group:
+          name: Ansible
+          description: Ansible security group
+          region: "{{region}}"
+          rules:
+            - proto: tcp
+              from_port: 80
+              to_port: 80
+              cidr_ip: 0.0.0.0/0
+
+            - proto: tcp
+              from_port: 22
+              to_port: 22
+              cidr_ip: 0.0.0.0/0
+
     - name: Create Sec grp for bastion
       ec2_group:
         name: Bastion-host-sg
@@ -38,24 +54,3 @@
             from_port: 80
             to_port: 80
             cidr_id: "{{MYIP}}"
-      register: bastion_sg_out
-
-    - name: creation bastion host
-      ec2:
-        #name: bastion_host
-        key_name: xprofile-key
-        region: "{{region}}"
-        instance_type: t2.micro
-        image: "{{bastion_ami}}"
-        assign_public_ip: yes
-        wait: yes
-        wait_timeout: 300
-        count_tag:
-           Name: "bastion_host"
-        exact_count: 1
-        group_id: '{{bastion_sg_out.group_id}}'
-        vpc_subnet_id: "{{pubsub1id}}"
-      register: bastion_host_out
-    
-    - debug:
-        var: bastion_host_out
