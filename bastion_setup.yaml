@@ -38,11 +38,11 @@
 
     - name: creation bastion host
       ec2:
-        name: bastion_host
+        #name: bastion_host
         key_name: xprofile-key
         region: "{{region}}"
         instance_type: t2.micro
-        image_id: "{{bastion_ami}}"
+        image: "{{bastion_ami}}"
         network:
           assign_public_ip: yes
         wait: yes
