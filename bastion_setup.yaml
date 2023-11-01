@@ -34,6 +34,10 @@
             from_port: 22
             to_port: 22
             cidr_id: "{{MYIP}}"
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_id: "{{MYIP}}"
       register: bastion_sg_out
 
     - name: creation bastion host
@@ -48,8 +52,6 @@
         wait_timeout: 300
         count_tag:
            Name: "bastion_host"
-           Project: XProfile
-           Owner: Bakero
         exact_count: 1
         group_id: '{{bastion_sg_out.group_id}}'
         vpc_subnet_id: "{{pubsub1id}}"
