@@ -25,7 +25,7 @@
 
     - name: Create a security group
       ec2_group:
-          name: Ansible
+          name: Bastion-host_tests
           description: Ansible security group
           region: "{{region}}"
           rules:
@@ -33,11 +33,10 @@
               from_port: 80
               to_port: 80
               cidr_ip: 0.0.0.0/0
-
             - proto: tcp
               from_port: 22
               to_port: 22
-              cidr_ip: 0.0.0.0/0
+              cidr_ip: "{{MYIP}}"
 
     - name: Create Sec grp for bastion
       ec2_group:
@@ -49,7 +48,7 @@
           - proto: tcp
             from_port: 22
             to_port: 22
-            cidr_id: "{{MYIP}}"
+            cidr_id: 0.0.0.0/0
           - proto: tcp
             from_port: 80
             to_port: 80
