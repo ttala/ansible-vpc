@@ -111,21 +111,37 @@
     - debug:
         var: natout
 
-    - name: create route table
+    - name: create route table for public network
       ec2_vpc_route_table:
           vpc_id: "{{vpcout.vpc.id}}"
           state: "{{state}}"
           region: "{{region}}"
           resource_tags:
-             Name: xprofile-rt
+             Name: xprofile-pubrt
           subnets:
             - "{{ pubsub1.subnet.id }}"
             - "{{ pubsub2.subnet.id }}"
             - "{{ pubsub3.subnet.id }}"
           routes:
             - dest: 0.0.0.0/0
+              gateway_id: "{{ igwout.gateway_id }}"
+      register: pubrtout
+
+    - name: create route table for private natwork
+      ec2_vpc_route_table:
+          vpc_id: "{{vpcout.vpc.id}}"
+          state: "{{state}}"
+          region: "{{region}}"
+          resource_tags:
+             Name: xprofile-prirt
+          subnets:
+            - "{{ prisub1.subnet.id }}"
+            - "{{ prisub2.subnet.id }}"
+            - "{{ prisub3.subnet.id }}"
+          routes:
+            - dest: 0.0.0.0/0
               gateway_id: "{{ natout.nat_gateway_id }}"
-      register: rtout
+      register: prirtout
 
     - set_fact:
         vpcid: "{{vpcout.vpc.id}}"
@@ -136,11 +152,12 @@
         prisub2id: "{{ prisub2.subnet.id }}"
         prisub3id: "{{ prisub3.subnet.id }}"
         igwid: "{{igwout.gateway_id}}"
-        rtid: "{{rtout.route_table.id}}"
+        pubrtid: "{{pubrtout.route_table.id}}"
+        prirtid: "{{prirtout.route_table.id}}"
         natid: "{{natout.nat_gateway_id}}"
         cacheable: yes
 
     - name: Create variables file for vpc
       copy:
-        content: "vpcid: {{vpcout.vpc.id}}\npubsub1id: {{ pubsub1.subnet.id }}\npubsub2id: {{ pubsub2.subnet.id }}\npubsub3id: {{ pubsub3.subnet.id }}\nprisub1id: {{ prisub1.subnet.id }}\nprisub2id: {{ prisub2.subnet.id }}\nprisub3id: {{ prisub3.subnet.id }}\nigwid: {{igwout.gateway_id}}\nrtid: {{rtout.route_table.id}}\nnatid: {{natout.nat_gateway_id}}"
+        content: "vpcid: {{vpcout.vpc.id}}\npubsub1id: {{ pubsub1.subnet.id }}\npubsub2id: {{ pubsub2.subnet.id }}\npubsub3id: {{ pubsub3.subnet.id }}\nprisub1id: {{ prisub1.subnet.id }}\nprisub2id: {{ prisub2.subnet.id }}\nprisub3id: {{ prisub3.subnet.id }}\nigwid: {{igwout.gateway_id}}\nprirtid: {{prirtout.route_table.id}}\npubrtid: {{pubrtout.route_table.id}}\nnatid: {{natout.nat_gateway_id}}"
         dest: vars/output_vars
