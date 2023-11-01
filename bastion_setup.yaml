@@ -41,19 +41,20 @@
       register: bastion_sg_out
 
     - name: creation bastion host
-      ec2:
-        #name: bastion_host
+      ec2_instance:
+        name: "bastion_host"
         key_name: xprofile-key
         region: "{{region}}"
         instance_type: t2.micro
-        image: "{{bastion_ami}}"
-        assign_public_ip: yes
-        wait: no
-        #wait_timeout: 300
-        count_tag:
+        image_id: "{{bastion_ami}}"
+        network:
+          assign_public_ip: yes
+        wait: yes
+        wait_timeout: 300
+        tags:
            Name: "bastion_host"
-        exact_count: 1
-        group_id: '{{bastion_sg_out.group_id}}'
+        count: 1
+        security_groups: ["{{bastion_sg_out.group_id}}"]
         vpc_subnet_id: "{{pubsub1id}}"
       register: bastion_host_out
     
