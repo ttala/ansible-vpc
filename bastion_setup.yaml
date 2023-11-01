@@ -31,13 +31,13 @@
         vpc_id: "{{vpcid}}"
         rules: 
           - proto: tcp
-            from_port: 22
-            to_port: 22
-            cidr_id: 0.0.0.0/0
-          - proto: tcp
             from_port: 80
             to_port: 80
             cidr_id: "{{MYIP}}"
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_id: 0.0.0.0/0
 
     - name: Create a security group
       ec2_group:
