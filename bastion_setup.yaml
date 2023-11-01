@@ -51,7 +51,7 @@
            Name: "bastion_host"
            Project: XProfile
            Owner: Bakero
-        count: 1
+        #count: 1
         security_groups: ["{{bastion_out.group_id}}"]
         vpc_subnet_id: "{{pubsub1id}}"
       register: bastion_host_out
