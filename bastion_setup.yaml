@@ -43,15 +43,16 @@
         region: "{{region}}"
         instance_type: t2.micro
         image: "{{bastion_ami}}"
+        network:
+          assign_public_ip: yes
         wait: yes
         wait_timeout: 300
         tags:
            Name: "bastion_host"
            Project: XProfile
            Owner: Bakero
-        #exact_count: 1
-        security_groups:
-           group_id: "{{bastion_out.group_id}}"
+        count: 1
+        security_groups: ["{{bastion_out.group_id}}"]
         vpc_subnet_id: "{{pubsub1id}}"
       register: bastion_host_out
     
