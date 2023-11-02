@@ -37,7 +37,7 @@
             from_port: 80
             to_port: 80
             cidr_ip: 0.0.0.0/0
-      register: xpro-elb-sg-out
+      register: xpro_elb_sg_out
 
     - name: Create security group for Xprofile stack
       ec2_group:
@@ -50,12 +50,12 @@
           - proto: tcp
             from_port: 80
             to_port: 80
-            group_id: "{{spro-elb-sg-out.group_id}}"
+            group_id: "{{spro_elb_sg_out.group_id}}"
           - proto: tcp
             from_port: 22
             to_port: 22
             group_id: "{{bastion_sg_id}}"
-      register: xpro-stk-sg-out
+      register: xpro_stk_sg_out
 
     - name: Update stack security group with its own sg id
       ec2_group:
@@ -66,5 +66,5 @@
         purge_rules: no
         rules:
           - proto: all
-            group_id: "{{spro-stk-sg-out.group_id}}"
-      register: xpro-stk-sg-out2
+            group_id: "{{spro_stk_sg_out.group_id}}"
+      register: xpro_stk_sg_out2
