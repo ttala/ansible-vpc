@@ -15,7 +15,7 @@
 
 - name: Clone source code from github
   git:
-    repo: ''
+    repo: 'https://github.com/devopshydclub/vprofile-project.git'
     dest: ./Xprofile-repo
     version: vp-rem
   register: git_status
