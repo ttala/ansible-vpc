@@ -75,8 +75,6 @@
         region: "{{region}}"
         instance_type: t2.micro
         image_id: "{{nginx_ami}}"
-        network:
-          assign_public_ip: yes
         wait: yes
         wait_timeout: 300
         tags:
@@ -93,8 +91,6 @@
         region: "{{region}}"
         instance_type: t2.micro
         image_id: "{{rmq_ami}}"
-        network:
-          assign_public_ip: yes
         wait: yes
         wait_timeout: 300
         tags:
@@ -111,8 +107,6 @@
         region: "{{region}}"
         instance_type: t2.micro
         image_id: "{{tomcat_ami}}"
-        network:
-          assign_public_ip: yes
         wait: yes
         wait_timeout: 300
         tags:
@@ -129,8 +123,6 @@
         region: "{{region}}"
         instance_type: t2.micro
         image_id: "{{mysql_ami}}"
-        network:
-          assign_public_ip: yes
         wait: yes
         wait_timeout: 300
         tags:
@@ -147,8 +139,6 @@
         region: "{{region}}"
         instance_type: t2.micro
         image_id: "{{memcache_ami}}"
-        network:
-          assign_public_ip: yes
         wait: yes
         wait_timeout: 300
         tags:
