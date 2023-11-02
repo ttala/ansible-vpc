@@ -66,5 +66,5 @@
         purge_rules: no
         rules:
           - proto: all
-            group_id: "{{spro_stk_sg_out.group_id}}"
+            group_id: "{{xpro_stk_sg_out.group_id}}"
       register: xpro_stk_sg_out2
