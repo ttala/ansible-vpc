@@ -70,11 +70,11 @@
 
     - name: creation nginx
       ec2_instance:
-        name: "nginx_host"
+        name: "nginx"
         key_name: xprokey
         region: "{{region}}"
         instance_type: t2.micro
-        image_id: "{{bastion_ami}}"
+        image_id: "{{nginx_ami}}"
         network:
           assign_public_ip: yes
         wait: yes
@@ -85,3 +85,78 @@
         security_groups: ["{{xpro_stk_sg_out.group_id}}"]
         vpc_subnet_id: "{{prisub1id}}"
       register: web01_out
+
+    - name: creation rmq
+      ec2_instance:
+        name: "rmq"
+        key_name: xprokey
+        region: "{{region}}"
+        instance_type: t2.micro
+        image_id: "{{rmq_ami}}"
+        network:
+          assign_public_ip: yes
+        wait: yes
+        wait_timeout: 300
+        tags:
+           Name: "rmq01"
+        #count: 1
+        security_groups: ["{{xpro_stk_sg_out.group_id}}"]
+        vpc_subnet_id: "{{prisub1id}}"
+      register: rmq01_out
+
+    - name: creation tomcat
+      ec2_instance:
+        name: "app"
+        key_name: xprokey
+        region: "{{region}}"
+        instance_type: t2.micro
+        image_id: "{{tomcat_ami}}"
+        network:
+          assign_public_ip: yes
+        wait: yes
+        wait_timeout: 300
+        tags:
+           Name: "app01"
+        #count: 1
+        security_groups: ["{{xpro_stk_sg_out.group_id}}"]
+        vpc_subnet_id: "{{prisub1id}}"
+      register: app01_out
+
+    - name: creation mysql
+      ec2_instance:
+        name: "mysql"
+        key_name: xprokey
+        region: "{{region}}"
+        instance_type: t2.micro
+        image_id: "{{mysql_ami}}"
+        network:
+          assign_public_ip: yes
+        wait: yes
+        wait_timeout: 300
+        tags:
+           Name: "db01"
+        #count: 1
+        security_groups: ["{{xpro_stk_sg_out.group_id}}"]
+        vpc_subnet_id: "{{prisub1id}}"
+      register: db01_out
+
+    - name: creation memcach
+      ec2_instance:
+        name: "memcach"
+        key_name: xprokey
+        region: "{{region}}"
+        instance_type: t2.micro
+        image_id: "{{memcach_ami}}"
+        network:
+          assign_public_ip: yes
+        wait: yes
+        wait_timeout: 300
+        tags:
+           Name: "mc01"
+        #count: 1
+        security_groups: ["{{xpro_stk_sg_out.group_id}}"]
+        vpc_subnet_id: "{{prisub1id}}"
+      register: mc01_out
+      
+    - debug:
+        var: mc01_out
