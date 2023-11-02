@@ -45,13 +45,26 @@
         description: Allow port 22 from everywhere
         region: "{{region}}"
         vpc_id: "{{vpcid}}"
+        purge_roles: no
         rules:
           - proto: tcp
             from_port: 80
             to_port: 80
-            group_id_ip: "{{spro-elb-sg-out.group_id}}"
+            group_id: "{{spro-elb-sg-out.group_id}}"
           - proto: tcp
             from_port: 22
             to_port: 22
-            group_id_ip: "{{bastion_sg_id}}"
+            group_id: "{{bastion_sg_id}}"
       register: xpro-stk-sg-out
+
+    - name: Update stack security group with its own sg id
+      ec2_group:
+        name: xpro-stk-sg
+        description: Allow port 22 from everywhere within the sg
+        region: "{{region}}"
+        vpc_id: "{{vpcid}}"
+        purge_rules: no
+        rules:
+          - proto: all
+            group_id: "{{spro-stk-sg-out.group_id}}"
+      register: xpro-stk-sg-out2
