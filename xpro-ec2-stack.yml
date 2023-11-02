@@ -45,7 +45,7 @@
         description: Allow port 22 from everywhere
         region: "{{region}}"
         vpc_id: "{{vpcid}}"
-        purge_roles: no
+        purge_rules: no
         rules:
           - proto: tcp
             from_port: 80
