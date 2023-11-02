@@ -159,5 +159,5 @@
 
     - name: Create variables file for vpc
       copy:
-        content: "vpcid: {{vpcout.vpc.id}}\npubsub1id: {{ pubsub1.subnet.id }}\npubsub2id: {{ pubsub2.subnet.id }}\npubsub3id: {{ pubsub3.subnet.id }}\nprisub1id: {{ prisub1.subnet.id }}\nprisub2id: {{ prisub2.subnet.id }}\nprisub3id: {{ prisub3.subnet.id }}\nigwid: {{igwout.gateway_id}}\nprirtid: {{prirtout.route_table.id}}\npubrtid: {{pubrtout.route_table.id}}\nnatid: {{natout.nat_gateway_id}}"
+        content: "region: {{region}}\nvpcid: {{vpcout.vpc.id}}\npubsub1id: {{ pubsub1.subnet.id }}\npubsub2id: {{ pubsub2.subnet.id }}\npubsub3id: {{ pubsub3.subnet.id }}\nprisub1id: {{ prisub1.subnet.id }}\nprisub2id: {{ prisub2.subnet.id }}\nprisub3id: {{ prisub3.subnet.id }}\nigwid: {{igwout.gateway_id}}\nprirtid: {{prirtout.route_table.id}}\npubrtid: {{pubrtout.route_table.id}}\nnatid: {{natout.nat_gateway_id}}"
         dest: vars/output_vars
