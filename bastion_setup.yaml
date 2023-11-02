@@ -60,3 +60,10 @@
     
     - debug:
         var: bastion_host_out
+
+    - name: Insert/Update 'Bastion Security Group' in vars/output_vars
+      blockinfile:
+        path: vars/output_vars
+        backup: yes
+        block: |
+          bastion_sg_id: {{bastion_sg_out.group_id}}

@@ -25,3 +25,33 @@
         dest: ./loginkey_xpro.pem
         mode: 0600
       when: xprokey_out.changed
+
+    - name: Create security group for load balancer
+      ec2_group:
+        name: xpro-elb-sg
+        description: Allow port 80 from everywhere
+        region: "{{region}}"
+        vpc_id: "{{vpcid}}"
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+      register: xpro-elb-sg-out
+
+    - name: Create security group for Xprofile stack
+      ec2_group:
+        name: xpro-stk-sg
+        description: Allow port 22 from everywhere
+        region: "{{region}}"
+        vpc_id: "{{vpcid}}"
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            group_id_ip: "{{spro-elb-sg-out.group_id}}"
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            group_id_ip: "{{bastion_sg_id}}"
+      register: xpro-stk-sg-out
