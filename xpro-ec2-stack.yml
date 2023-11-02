@@ -196,7 +196,7 @@
         mode: 0400
       when: xprokey_out.changed
 
-    - name: Inseert/Update Inventory file provision-stack
+    - name: Insert/Update Inventory file provision-stack
       blockinfile:
         path: provision-stack/inventory-xpro
         block: |
