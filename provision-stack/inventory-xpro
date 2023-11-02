@@ -12,7 +12,7 @@ web01
 [appsrvgrp]
 app01
 
-[rmqsrcgrp]
+[rmqsrvgrp]
 rmq01
 
 [dbsrvgrp]
