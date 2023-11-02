@@ -13,27 +13,27 @@
         - openjdk-8-jdk
         - maven
 
-- name: Clone source code from github
-  git:
-    repo: 'https://github.com/devopshydclub/vprofile-project.git'
-    dest: ./Xprofile-repo
-    version: vp-rem
-  register: git_status
+    - name: Clone source code from github
+      git:
+        repo: 'https://github.com/devopshydclub/vprofile-project.git'
+        dest: ./Xprofile-repo
+        version: vp-rem
+      register: git_status
 
-- name: mvn install command to build artifact
-  command: "mvn install"
-  args:
-    chdir: Xprofile-repo
-  when: git_status.changed
-  register: mvn_info
+    - name: mvn install command to build artifact
+      command: "mvn install"
+      args:
+        chdir: Xprofile-repo
+      when: git_status.changed
+      register: mvn_info
 
-- name: Copy artifacts to files directory
-  copy:
-    src: "{{item}}"
-    dest: files/ROOT.war
-  with_fileglob: Xprofile-repo/target/*.war
+    - name: Copy artifacts to files directory
+      copy:
+        src: "{{item}}"
+        dest: files/ROOT.war
+      with_fileglob: Xprofile-repo/target/*.war
 
-- name: Copy sql file to files directory
-  copy:
-    src: Xprofile-repo/src/main/resources/db_backup.sql
-    dest: files/db_backup.sql
+    - name: Copy sql file to files directory
+      copy:
+        src: Xprofile-repo/src/main/resources/db_backup.sql
+        dest: files/db_backup.sql
