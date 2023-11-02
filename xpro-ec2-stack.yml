@@ -50,7 +50,7 @@
           - proto: tcp
             from_port: 80
             to_port: 80
-            group_id: "{{spro_elb_sg_out.group_id}}"
+            group_id: "{{xpro_elb_sg_out.group_id}}"
           - proto: tcp
             from_port: 22
             to_port: 22
