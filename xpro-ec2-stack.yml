@@ -67,4 +67,21 @@
         rules:
           - proto: all
             group_id: "{{xpro_stk_sg_out.group_id}}"
-      register: xpro_stk_sg_out2
+
+    - name: creation nginx
+      ec2_instance:
+        name: "nginx_host"
+        key_name: xprokey
+        region: "{{region}}"
+        instance_type: t2.micro
+        image_id: "{{bastion_ami}}"
+        network:
+          assign_public_ip: yes
+        wait: yes
+        wait_timeout: 300
+        tags:
+           Name: "web01"
+        #count: 1
+        security_groups: ["{{xpro_stk_sg_out.group_id}}"]
+        vpc_subnet_id: "{{prisub1id}}"
+      register: web01_out
