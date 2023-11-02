@@ -24,4 +24,4 @@
         content: "{{xprokey_out.key.private_key}}"
         dest: ./loginkey_xpro.pem
         mode: 0600
-      when: xprokey_out_changed
+      when: xprokey_out.changed
