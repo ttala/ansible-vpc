@@ -1,0 +1,27 @@
+---
+- name: Setup Xprofile ec2 stack
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Import VPC setup variable
+      include_vars: vars/output_vars
+
+    - name: Import ami image variable
+      include_vars: vars/xprostack_setup
+
+    - name: Import ami image variable
+      include_vars: vars/vpc_setup
+
+    - name: Create xprofile ec2 key
+      ec2_key:
+        name: xprokey
+        region: "{{region}}"
+      register: xprokey_out
+
+    - name: Save private key into loginkey_xpro.pem
+      copy:
+        content: "{{xprokey_out.key.private_key}}"
+        dest: ./loginkey_xpro.pem
+        mode: 0600
+      when: xprokey_changed
