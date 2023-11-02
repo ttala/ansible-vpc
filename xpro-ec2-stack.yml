@@ -146,7 +146,7 @@
         key_name: xprokey
         region: "{{region}}"
         instance_type: t2.micro
-        image_id: "{{memcach_ami}}"
+        image_id: "{{memcache_ami}}"
         network:
           assign_public_ip: yes
         wait: yes
@@ -157,6 +157,6 @@
         security_groups: ["{{xpro_stk_sg_out.group_id}}"]
         vpc_subnet_id: "{{prisub1id}}"
       register: mc01_out
-      
+
     - debug:
         var: mc01_out
