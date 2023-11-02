@@ -151,7 +151,7 @@
     - debug:
         var: mc01_out.tagged_instences[0].id
 
-    - location_action:
+    - local_action:
         module: ec2_elb_lb
         name: "xprofile-elb"
         region: "{{region}}"
