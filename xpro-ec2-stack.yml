@@ -194,7 +194,7 @@
         src: loginkey_xpro.pem
         dest: provision-stack/loginkey_xpro.pem
         mode: 0400
-      when: xprokey_out.changed
+        #when: xprokey_out.changed
 
     - name: Insert/Update Inventory file provision-stack
       blockinfile:
