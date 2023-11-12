@@ -1,4 +1,4 @@
-vpc_name: "Xprofile-vpc"
+vpc_name: "ansible-vpc"
 
 vpcCidr: '172.20.0.0/16'
 

@@ -1,49 +1,49 @@
 ---
-- name: Setup Xprofile Bastion
+- name: Setup a host for our ansible vpc
   hosts: localhost
   connection: local
   gather_facts: no
   tasks:
     - name: Import VPC setup variable
-      include_vars: vars/bastion_setup
+      include_vars: vars/host_setup
 
     - name: Import VPC setup variable
       include_vars: vars/output_vars
 
-    - name: Create xprofile ec2 key
+    - name: Create ec2 key
       ec2_key:
-        name: xprofile-key
+        name: ansible-key
         region: "{{region}}"
       register: key_out
 
     - name: Save private key into file
       copy:
         content: "{{key_out.key.private_key}}"
-        dest: "./bastion-key.pem"
-        mode: 8600
+        dest: "./ansible-key.pem"
+        mode: 0600
       when: key_out.changed
 
     - name: Create a security group
       ec2_group:
-          name: Bastion-host-sg
-          description: security group for bastion host
+          name: ansible-host-sg
+          description: security group for the host
           region: "{{region}}"
           vpc_id: "{{vpcid}}"
           rules:
             - proto: tcp
               from_port: 80
               to_port: 80
-              cidr_ip: "{{MYIP}}"
+              cidr_ip: "0.0.0.0/0"
             - proto: tcp
               from_port: 22
               to_port: 22
-              cidr_ip: "{{MYIP}}"
-      register: bastion_sg_out
+              cidr_ip: "0.0.0.0/0"
+      register: ansible_sg_out
 
     - name: creation bastion host
       ec2_instance:
-        name: "bastion_host"
-        key_name: xprofile-key
+        name: "ansible_host"
+        key_name: ansible-key
         region: "{{region}}"
         instance_type: t2.micro
         image_id: "{{bastion_ami}}"
@@ -54,9 +54,11 @@
         tags:
            Name: "bastion_host"
         #count: 1
-        security_groups: ["{{bastion_sg_out.group_id}}"]
+        security_groups: ["{{ansible_sg_out.group_id}}"]
         vpc_subnet_id: "{{pubsub1id}}"
       register: bastion_host_out
     
     - debug:
-        var: bastion_host_out
+        var: bastion_host_out.instances[0].public_ip_address
+
+      

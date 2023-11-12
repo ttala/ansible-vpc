@@ -1,0 +1,2 @@
+bastion_ami: 'ami-0a4b7ff081ca1ded9' # Amazone Linux AMI
+region: 'eu-west-3'

@@ -4,7 +4,7 @@
   tasks: 
     - name: Import vpc variables
       include_vars: vars/vpc_setup
-    - name: Create xprofile vpc
+    - name: Create ansible vpc
       ec2_vpc_net:
         name: "{{vpc_name}}"
         cidr_block: "{{vpcCidr}}"
@@ -27,7 +27,7 @@
           region: "{{region}}"
           map_public: yes
           resource_tags:
-             Name: xprofile-pubsub1
+             Name: ansible-pubsub1
       register: pubsub1
 
     - name: create public subnet 2 in zone 2
@@ -39,7 +39,7 @@
           region: "{{region}}"
           map_public: yes
           resource_tags:
-             Name: xprofile-pubsub2
+             Name: ansible-pubsub2
       register: pubsub2
 
     - name: create public subnet 3 in zone 3
@@ -51,7 +51,7 @@
           region: "{{region}}"
           map_public: yes
           resource_tags:
-             Name: xprofile-pubsub3
+             Name: ansible-pubsub3
       register: pubsub3
 
     - name: create private subnet 1 in zone 1
@@ -63,7 +63,7 @@
           region: "{{region}}"
           map_public: yes
           resource_tags:
-             Name: xprofile-PriSub1
+             Name: ansible-PriSub1
       register: prisub1
 
     - name: create private subnet 2 in zone 2
@@ -75,7 +75,7 @@
           region: "{{region}}"
           map_public: yes
           resource_tags:
-             Name: xprofile-prisub2
+             Name: ansible-prisub2
       register: prisub2
 
     - name: create private subnet 3 in zone 3
@@ -87,7 +87,7 @@
           region: "{{region}}"
           map_public: yes
           resource_tags:
-             Name: xprofile-PriSub3
+             Name: ansible-PriSub3
       register: prisub3
     
     - name: create internet gateway
@@ -96,7 +96,7 @@
           state: "{{state}}"
           region: "{{region}}"
           resource_tags:
-             Name: xprofile-IGW
+             Name: ansible-IGW
       register: igwout
 
     - name: create new nat gateway and allocate new EIP
@@ -117,7 +117,7 @@
           state: "{{state}}"
           region: "{{region}}"
           resource_tags:
-             Name: xprofile-pubrt
+             Name: ansible-pubrt
           subnets:
             - "{{ pubsub1.subnet.id }}"
             - "{{ pubsub2.subnet.id }}"
@@ -133,7 +133,7 @@
           state: "{{state}}"
           region: "{{region}}"
           resource_tags:
-             Name: xprofile-prirt
+             Name: ansible-prirt
           subnets:
             - "{{ prisub1.subnet.id }}"
             - "{{ prisub2.subnet.id }}"
@@ -157,7 +157,7 @@
         natid: "{{natout.nat_gateway_id}}"
         cacheable: yes
 
-    - name: Create variables file for vpc
+    - name: Save resource id's to a variable file
       copy:
         content: "vpcid: {{vpcout.vpc.id}}\npubsub1id: {{ pubsub1.subnet.id }}\npubsub2id: {{ pubsub2.subnet.id }}\npubsub3id: {{ pubsub3.subnet.id }}\nprisub1id: {{ prisub1.subnet.id }}\nprisub2id: {{ prisub2.subnet.id }}\nprisub3id: {{ prisub3.subnet.id }}\nigwid: {{igwout.gateway_id}}\nprirtid: {{prirtout.route_table.id}}\npubrtid: {{pubrtout.route_table.id}}\nnatid: {{natout.nat_gateway_id}}"
         dest: vars/output_vars
